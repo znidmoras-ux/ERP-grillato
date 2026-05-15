@@ -1,0 +1,40 @@
+{
+    "empresa": "Grillato Hamburgueria",
+    "cidade": "Arapongas - PR",
+
+    "financeiro": {
+        "custo_fixo_mensal": 15188.90,
+        "dias_operacao_mes": 22,
+        "meta_breakeven_diaria": 687.00,
+        "caixa_sobrevivencia": 9502.88,
+        "payroll_teto_pct": 0.25,
+        "meta_faturamento_mensal_min": 35000.00,
+        "meta_faturamento_mensal_max": 45000.00
+    },
+
+    "producao": {
+        "gramatura_smash_g": 70,
+        "gramatura_alto_g": 100,
+        "teto_pedidos_dia": 17,
+        "estoque_seguranca": {
+            "carne_kg": 2.0,
+            "bacon_kg": 1.0
+        }
+    },
+
+    "insumos_base": {
+        "carne_kg": 32.00,
+        "cheddar_kg": 45.00,
+        "bacon_kg": 38.00,
+        "batata_kg": 8.50,
+        "pao_brioche_unid": 1.20
+    },
+
+    "caminhos": {
+        "csv_vendas": "dados/vendas/",
+        "csv_ifood": "dados/ifood/",
+        "historico_precos": "dados/historico_precos.json",
+        "log_estoque": "dados/estoque_log.json",
+        "log_runway": "dados/runway_log.json"
+    }
+}
