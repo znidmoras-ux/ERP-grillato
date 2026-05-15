@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from erp import db_insumos, db_produtos, db_fornecedores, db_notas_fiscais, db_pedidos, db_financeiro
+from erp.auth import render_login, render_user_info, paginas_permitidas, get_perfil_atual
 
 # ============================================================
 # CONFIGURAÇÃO DA PÁGINA
@@ -71,24 +72,26 @@ def render_sidebar():
         st.markdown("## 🍔 GRILLATO ERP")
         st.caption("Sistema de Gestão v2.0")
         st.divider()
+        render_user_info()
+        st.divider()
+
+        # Mapa de icones para paginas
+        icones = {
+            "Dashboard": "📊", "Insumos": "📦", "Produtos": "🍔",
+            "Fornecedores": "🏭", "Notas Fiscais": "📄", "Pedidos": "🛒",
+            "Financeiro": "💰", "CMV": "📈", "Custos Fixos": "⚙️",
+        }
+        permitidas = paginas_permitidas()
+        opcoes = [f"{icones.get(p, '📋')} {p}" for p in permitidas]
 
         menu = st.radio(
             "Menu",
-            [
-                "📊 Dashboard",
-                "📦 Insumos",
-                "🍔 Produtos & Fichas",
-                "🏭 Fornecedores",
-                "📄 Notas Fiscais",
-                "🛒 Pedidos",
-                "💰 Financeiro",
-                "📈 CMV & Margem",
-                "⚙️ Custos Fixos",
-            ],
+            opcoes,
             label_visibility="collapsed",
         )
         st.divider()
-        st.caption(f"📅 {date.today().strftime('%d/%m/%Y')}")
+        perfil = get_perfil_atual()
+        st.caption(f"📅 {date.today().strftime('%d/%m/%Y')} | Perfil: {perfil}")
         return menu
 
 
@@ -985,6 +988,10 @@ def render_custos_fixos():
 # ROTEADOR PRINCIPAL
 # ============================================================
 def main():
+    # Exigir login antes de tudo
+    if not render_login():
+        return
+
     menu = render_sidebar()
 
     if "Dashboard" in menu:
