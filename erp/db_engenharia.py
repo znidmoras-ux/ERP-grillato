@@ -17,13 +17,16 @@ def analise_engenharia(data_inicio=None, data_fim=None):
     cmv = sb.table("vw_cmv_produtos").select("*").execute().data
     cmv_map = {c["produto_id"]: c for c in cmv} if cmv else {}
 
-    # 2. Vendas por produto
-    q = sb.table("itens_pedido").select("produto_id, quantidade, produtos(nome)")
+    # 2. Vendas por produto (filtrar via pedidos.data_pedido)
+    q = sb.table("itens_pedido").select("produto_id, quantidade, produtos(nome), pedidos(data_pedido)")
     if data_inicio:
-        q = q.gte("created_at", data_inicio)
+        q = q.gte("pedidos.data_pedido", data_inicio)
     if data_fim:
-        q = q.lte("created_at", data_fim)
+        q = q.lte("pedidos.data_pedido", data_fim)
     vendas_raw = q.execute().data
+    # Filtrar itens que ficaram sem pedido (quando filtro via foreign table, supabase retorna nulls)
+    if data_inicio or data_fim:
+        vendas_raw = [v for v in vendas_raw if v.get("pedidos") is not None]
 
     # Agregar vendas
     vendas = {}
