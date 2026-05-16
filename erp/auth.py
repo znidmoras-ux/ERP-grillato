@@ -75,15 +75,50 @@ def render_login():
 
     st.markdown("""
     <style>
-        .login-title {text-align:center;font-size:2rem;font-weight:700;color:#e94560;margin-bottom:8px;}
-        .login-sub {text-align:center;color:#8a8a9a;font-size:0.9rem;margin-bottom:24px;}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        .login-container {
+            text-align: center;
+            padding: 40px 0 20px 0;
+        }
+        .login-brand {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #e94560, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+        .login-sub {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 32px;
+        }
+        .login-line {
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, #e94560, #f59e0b);
+            margin: 12px auto 24px auto;
+            border-radius: 2px;
+        }
     </style>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
-        st.markdown('<p class="login-title">GRILLATO ERP</p>', unsafe_allow_html=True)
-        st.markdown('<p class="login-sub">Sistema de Gestao</p>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="login-container">
+            <div class="login-brand">GRILLATO</div>
+            <div class="login-line"></div>
+            <div class="login-sub">Sistema Operacional de Delivery</div>
+        </div>
+        """, unsafe_allow_html=True)
         with st.form("login_form"):
             usuario = st.text_input("Usuario", placeholder="admin ou caixa")
             senha = st.text_input("Senha", type="password", placeholder="Digite sua senha")

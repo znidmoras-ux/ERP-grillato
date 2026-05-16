@@ -1625,6 +1625,7 @@ def render_bi():
         except Exception as e:
             st.caption(str(e))
     with tab4:
+    with tab4:
         try:
             previsao = db_bi.previsao_demanda()
             if previsao:
@@ -1757,7 +1758,7 @@ def render_compras():
             listas = db_previsao_compras.listar_listas()
             if listas:
                 for l in listas[:10]:
-                    with st.expander(f"Lista {l.get('data_geracao', '?')} - {l.get('dias_cobertura', '?')} dias"):
+                    with st.expander(f"Lista {l.get('data_geracao', '?')} — {l.get('dias_cobertura', '?')} dias"):
                         itens = db_previsao_compras.itens_lista(l["id"])
                         if itens:
                             df_i = pd.DataFrame(itens)
@@ -1851,6 +1852,7 @@ def render_produtividade():
                 df_reg = pd.DataFrame(registros)
                 st.dataframe(df_reg, use_container_width=True)
 
+                # Opcao de excluir
                 reg_map = {f"{r['data']} {r.get('turno', '?')} {r.get('pedidos_realizados', 0)}ped": r["id"] for r in registros}
                 sel_r = st.selectbox("Selecione para excluir", list(reg_map.keys()))
                 if st.button("Excluir"):
